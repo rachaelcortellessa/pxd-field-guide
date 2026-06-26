@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PXD Field Guide</title>
+<style>
+  :root {
+    --bg: #f7f6f3;
+    --surface: #ffffff;
+    --border: #e5e2db;
+    --text: #1a1a18;
+    --muted: #706e69;
+    --accent: #2d5be3;
+    --accent-light: #eef1fd;
+    --tag-ux: #e8f4f0;
+    --tag-ux-text: #1a6b52;
+    --tag-research: #fef3e2;
+    --tag-research-text: #8a4a00;
+    --tag-content: #f0eaff;
+    --tag-content-text: #5a2d9e;
+    --tag-product: #fde8f0;
+    --tag-product-text: #8c1f4a;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .header-text h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .header-text p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 4px;
+    max-width: 520px;
+  }
+
+  /* ── Tab bar ── */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    padding: 24px 32px 0;
+  }
+
+  .tab {
+    padding: 10px 20px;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    background: var(--bg);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: all 0.15s;
+  }
+
+  .tab.active {
+    background: var(--surface);
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .tab:hover:not(.active) {
+    color: var(--text);
+    background: #efefec;
+  }
+
+  /* ── Main content ── */
+  main {
+    padding: 0 32px 48px;
+  }
+
+  .panel {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0 var(--radius) var(--radius) var(--radius);
+    padding: 32px;
+  }
+
+  .panel.active { display: block; }
+
+  .panel-intro {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Persona grid ── */
+  .personas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  /* ── Persona card ── */
+  .persona-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: box-shadow 0.15s;
+    cursor: pointer;
+  }
+
+  .persona-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+  .persona-card.open { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+
+  .card-header {
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    user-select: none;
+  }
+
+  .card-emoji {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .card-title {
+    flex: 1;
+  }
+
+  .card-title h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .card-title .situation {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .card-chevron {
+    font-size: 12px;
+    color: var(--muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .persona-card.open .card-chevron { transform: rotate(180deg); }
+
+  /* ── Expanded content ── */
+  .card-body {
+    display: none;
+    border-top: 1px solid var(--border);
+    padding: 20px;
+    background: #fafaf8;
+  }
+
+  .persona-card.open .card-body { display: block; }
+
+  .client-quote {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-style: italic;
+    color: #2a2a28;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .client-quote .quote-label {
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  /* multiple quotes */
+  .client-quote + .client-quote { margin-top: -12px; }
+
+  /* ── Roles section ── */
+  .roles-section h4 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .role-block {
+    margin-bottom: 16px;
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .role-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+  }
+
+  .role-label.ux { background: var(--tag-ux); color: var(--tag-ux-text); }
+  .role-label.research { background: var(--tag-research); color: var(--tag-research-text); }
+  .role-label.content { background: var(--tag-content); color: var(--tag-content-text); }
+  .role-label.product { background: var(--tag-product); color: var(--tag-product-text); }
+
+  .deliverables-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .deliverables-list li {
+    font-size: 13px;
+    color: #3a3a38;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .deliverables-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-size: 11px;
+    top: 1px;
+  }
+
+  /* ── Brief draft ── */
+  .brief-section {
+    margin-top: 20px;
+    padding: 16px;
+    background: #f7f6f3;
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--border);
+  }
+
+  .brief-section h4 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .brief-section h4 .copy-btn {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-transform: none;
+    letter-spacing: 0;
+    padding: 0;
+  }
+
+  .brief-section h4 .copy-btn:hover { text-decoration: underline; }
+
+  .brief-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #3a3a38;
+    white-space: pre-line;
+  }
+
+  /* ── Role legend ── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* ── Role detail panel ── */
+  .role-detail-section {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .role-detail-section h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .role-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  .role-card {
+    padding: 18px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .role-card-name {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .role-card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .role-card-when {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .role-card-when span {
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    header, .tabs, main { padding-left: 16px; padding-right: 16px; }
+    .personas { grid-template-columns: 1fr; }
+    .role-cards { grid-template-columns: 1fr; }
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #1a1a18;
+    color: white;
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 99;
+  }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-text">
+    <h1>PXD Field Guide</h1>
+    <p>Match what your client is experiencing to the right team roles and deliverables — then get a head start on your brief.</p>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('redesign')">Redesign Projects</div>
+  <div class="tab" onclick="switchTab('retainer')">Retainer Projects</div>
+  <div class="tab" onclick="switchTab('roles')">Role Guide</div>
+</div>
+
+<main>
+
+<!-- ── REDESIGN ── -->
+<div class="panel active" id="panel-redesign">
+  <p class="panel-intro">Use this when you're scoping or staffing a site redesign. Find the scenario that best matches what your client is experiencing — most projects will touch more than one.</p>
+
+  <div class="personas">
+
+    <!-- 1a. The Overgrown Site -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">🌿</div>
+        <div class="card-title">
+          <h3>The Overgrown Site</h3>
+          <div class="situation">The client has been adding content for years without a plan. They know it's a mess — they just don't know how to stop digging.</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "Our website is confusing and overly complicated — users can't find what they need."
+        </div>
+        <div class="client-quote">
+          <div class="quote-label">Also sounds like</div>
+          "We've added so much over the years and it's gotten away from us."
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label content">✍️ Content Design</div>
+            <ul class="deliverables-list">
+              <li>Content audit against goals, user needs, and current performance</li>
+              <li>Content ecosystem map to visualize what exists and how it connects</li>
+              <li>Taxonomy and labeling systems</li>
+              <li>Sitemaps and navigation redesign</li>
+              <li>Governance model: roles, responsibilities, and publishing rules</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>Audience research: top tasks, priorities, and goals</li>
+              <li>Define success metrics for navigation and findability</li>
+              <li>User flows grounded in actual audience behavior</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label research">🔬 Research</div>
+            <ul class="deliverables-list">
+              <li>Tree testing and card sorting to validate restructured navigation</li>
+              <li>Analytics review: audience pathways and drop-off points</li>
+              <li>Findability benchmarking</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-overgrown')">Copy</button></h4>
+          <div class="brief-text" id="brief-overgrown">The client's site has grown without a clear IA strategy — content has been added layer by layer and the structure no longer reflects how users think or what they need. The client is aware it's a problem but has kept adding rather than stepping back to redesign the system. Content Design will lead this engagement: auditing what exists, mapping the ecosystem, and establishing a taxonomy and governance model that prevents the problem from recurring. UX will define the audience and set success metrics. Research will validate the new structure through testing before we build. The goal is not just a better nav — it's a system the client can actually maintain.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1b. The Ghost Ship -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">🗺️</div>
+        <div class="card-title">
+          <h3>The Ghost Ship</h3>
+          <div class="situation">The client has lost track of what their site even contains. Staff turnover, old vendors, or years of neglect mean nobody has a full picture — including them.</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "Honestly, we don't even know what's on our site anymore."
+        </div>
+        <div class="client-quote">
+          <div class="quote-label">Also sounds like</div>
+          "You'll need to talk to the previous agency to get context." / "I think someone owns that section but I'm not sure who."
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>Site inventory and audit: what exists, what's used, what's orphaned</li>
+              <li>Stakeholder interviews to map content ownership</li>
+              <li>Scope definition: what can be touched and what can't</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label research">🔬 Research</div>
+            <ul class="deliverables-list">
+              <li>Analytics review: what content is actually getting traffic and use</li>
+              <li>Audience pathways to identify what matters vs. what can be cut</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label content">✍️ Content Design</div>
+            <ul class="deliverables-list">
+              <li>Content ecosystem map once inventory is complete</li>
+              <li>IA and taxonomy recommendations based on what the audit surfaces</li>
+              <li>Roles and responsibilities framework going forward</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-nomap')">Copy</button></h4>
+          <div class="brief-text" id="brief-nomap">The client doesn't have a working map of their own site — content ownership is unclear, institutional knowledge has walked out the door, and nobody can give us a confident picture of what's there. Before we can design anything, we need to establish that picture ourselves. UX will lead a site audit and stakeholder interview process to inventory what exists and who owns it. Research will layer in analytics to separate what's actually valuable from what's just old. Only once we have that foundation can Content Design build the ecosystem map and IA recommendations. Scoping this engagement without the discovery phase is not an option — we'll be designing in the dark.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. The Conversion Chaser -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">📉</div>
+        <div class="card-title">
+          <h3>The Conversion Chaser</h3>
+          <div class="situation">High exit rates, incomplete journeys, low engagement. Users are leaving and the client wants to know why — and fix it.</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "Users are abandoning flows or dropping off mid-task, and we don't know why."
+        </div>
+        <div class="client-quote">
+          <div class="quote-label">Also sounds like</div>
+          "We have a general idea of who our audiences are, but we don't know what their needs are or what they come to the site to do."
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label research">🔬 Research</div>
+            <ul class="deliverables-list">
+              <li>Customer behavioral research</li>
+              <li>UX benchmarking against current experience</li>
+              <li>Surveys and usability testing</li>
+              <li>Analytics: audience pathways and funnel analysis</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>User journey mapping grounded in discovery data</li>
+              <li>Roadmapping and scope clarification</li>
+              <li>UX audit (behavioral heuristics, heatmaps, a11y)</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label content">✍️ Content Design</div>
+            <ul class="deliverables-list">
+              <li>Identify content touch points across the user journey</li>
+              <li>Language standardization and comprehension testing</li>
+              <li>Microcopy and CTA review</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-conv')">Copy</button></h4>
+          <div class="brief-text" id="brief-conv">The client is seeing significant drop-off and wants to understand the "why" behind user behavior before making design decisions. This project starts with research — we need behavioral data, analytics review, and direct user input to identify where and why journeys are breaking down. From there, UX will map the corrected journey and Content Design will audit the language and touch points contributing to confusion or hesitation. We should not propose design solutions until we've validated the actual problem.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. The Divided Room -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">⚖️</div>
+        <div class="card-title">
+          <h3>The Divided Room</h3>
+          <div class="situation">Multiple stakeholders, competing visions. Internal alignment is broken and the team can't agree on direction.</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "We have competing stakeholder visions and need to find a way forward."
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label research">🔬 Research</div>
+            <ul class="deliverables-list">
+              <li>Stakeholder workshops to surface and align competing priorities</li>
+              <li>1:1 stakeholder interviews to understand individual perspectives</li>
+              <li>UX site audit to ground opinions in observable behavior</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label content">✍️ Content Design</div>
+            <ul class="deliverables-list">
+              <li>Messaging workshop to align on core narrative</li>
+              <li>Messaging architecture that accommodates multiple stakeholder goals</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>Full site audit (behavioral heuristics, analytics, a11y)</li>
+              <li>Lead/Manager alignment sessions with key stakeholders</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-div')">Copy</button></h4>
+          <div class="brief-text" id="brief-div">The client has a fractured internal team with competing visions for what this project should accomplish. Before any design work begins, we need to create shared ground. Research will lead stakeholder workshops and 1:1 sessions to surface the real tension points. Content Design will run a messaging workshop to establish a core narrative everyone can work from. UX will conduct an objective audit of the current site to move the conversation from opinions to evidence. The goal of this phase is alignment — without it, anything we build will be challenged downstream.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. The Content Crisis -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">🗄️</div>
+        <div class="card-title">
+          <h3>The Content Crisis</h3>
+          <div class="situation">Content is unmanageable, the CMS is a mess, governance has broken down, and nobody knows where to start.</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "We've put this redesign off because we don't know where to start — it's a huge mess."
+        </div>
+        <div class="client-quote">
+          <div class="quote-label">Also sounds like</div>
+          "We don't let anyone use the CMS because they might mess everything up."
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label content">✍️ Content Design</div>
+            <ul class="deliverables-list">
+              <li>Content ecosystem map</li>
+              <li>Content audit against goals, objectives, and user needs</li>
+              <li>Roles and responsibilities recommendations</li>
+              <li>IA and content templates</li>
+              <li>Content migration plan</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>Content curation strategy during wireframing stage</li>
+              <li>Admin role and workflow recommendations</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-cms')">Copy</button></h4>
+          <div class="brief-text" id="brief-cms">The client's content is in a state of significant disorganization — the volume is overwhelming, governance has broken down, and the CMS is either locked down or feared. This is primarily a Content Design engagement at the start. We need to audit and map the existing content ecosystem before we can make any meaningful structural decisions. Content Design will lead the audit, establish a governance model, create templates and IA frameworks, and build a migration plan. UX will support by thinking through content curation strategies at the wireframing stage. The client should be told clearly: we can't redesign our way out of a content problem — we need to solve the content first.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. The Multi-Audience Juggler -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">🎭</div>
+        <div class="card-title">
+          <h3>The Multi-Audience Juggler</h3>
+          <div class="situation">The site needs to serve very different user groups at the same time with different needs, goals, and entry points.</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "Our site needs to talk to very different personas at the same time."
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label content">✍️ Content Design</div>
+            <ul class="deliverables-list">
+              <li>Messaging architecture for each audience</li>
+              <li>Content playbook</li>
+              <li>Template design with audience-aware structure</li>
+              <li>IA and navigation strategy</li>
+              <li>Prioritization support across competing content needs</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>Page layout strategy: getting the right info to the right users</li>
+              <li>User flow design for multiple entry points</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label research">🔬 Research</div>
+            <ul class="deliverables-list">
+              <li>Understand what different users do on the site and why they visit</li>
+              <li>Audience segmentation and needs mapping</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-multi')">Copy</button></h4>
+          <div class="brief-text" id="brief-multi">The client's site serves multiple distinct audiences whose needs are often in tension. The risk here is building something that tries to speak to everyone and resonates with no one. Research will start by defining what each audience actually comes to the site to do — not who the client thinks they are, but how they behave. Content Design will then build a messaging architecture and IA strategy that allows each audience to navigate confidently without the experience feeling fractured. UX will design page layouts and flows that make the right content visible to the right people at the right moment.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. The Data-less Guesser -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">🌫️</div>
+        <div class="card-title">
+          <h3>The Data-less Guesser</h3>
+          <div class="situation">No user data. Decisions are based on internal opinions. The client wants to move fast but has no foundation to build on.</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "How can we — or should we — proceed without data?"
+        </div>
+        <div class="client-quote">
+          <div class="quote-label">Also sounds like</div>
+          "We have a general idea of who our audiences are, but we don't really know what they need."
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label research">🔬 Research</div>
+            <ul class="deliverables-list">
+              <li>User interviews to establish a baseline understanding</li>
+              <li>UX benchmark of the current experience</li>
+              <li>Analytics review to layer quantitative context</li>
+              <li>Surveys to gather attitudinal data at scale</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>Roadmapping: define what we know vs. what we need to learn before scoping</li>
+              <li>Scope clarification and phased discovery planning</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-blind')">Copy</button></h4>
+          <div class="brief-text" id="brief-blind">The client wants to move forward but lacks the user data needed to make confident design decisions. Without it, we risk building something grounded in internal assumptions that won't reflect how real users think or behave. Before we scope design work, we need a research phase. Research will conduct user interviews to establish a baseline, layer in analytics to add quantitative context, and benchmark the current experience. UX will use those findings to define a clear scope and phase the work appropriately. This is not a delay — it's how we protect the client's investment.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. The Identity Shifter -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">🔄</div>
+        <div class="card-title">
+          <h3>The Identity Shifter</h3>
+          <div class="situation">The company has rebranded, changed its name, been acquired, or significantly shifted its market positioning.</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "We had a rebrand / brand name change / we got bought — and the site needs to catch up."
+        </div>
+        <div class="client-quote">
+          <div class="quote-label">Also sounds like</div>
+          "What is the purpose of a website anymore these days?"
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>Brand strategy sprint: align on new values and positioning</li>
+              <li>Market audit sprint</li>
+              <li>Scope the full system across multiple domains if needed</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label content">✍️ Content Design</div>
+            <ul class="deliverables-list">
+              <li>Brand messaging audit across all site surfaces</li>
+              <li>IA review for new positioning needs</li>
+              <li>Messaging architecture aligned to new brand</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label research">🔬 Research</div>
+            <ul class="deliverables-list">
+              <li>User interviews across current site to identify existing brand perception</li>
+              <li>Competitive analysis in new market context</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-rebrand')">Copy</button></h4>
+          <div class="brief-text" id="brief-rebrand">The client is navigating a significant identity change and the site needs to reflect a new reality — new name, new positioning, or new ownership. This isn't just a visual refresh; the site's structure, language, and content hierarchy all need to be reconsidered in light of what the brand now stands for. UX will lead a brand strategy sprint to establish alignment on the new positioning before any design begins. Content Design will audit all existing messaging and build an architecture that reflects the new brand. Research will help understand how current users perceive the brand and what the competition is doing in this space.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /personas -->
+</div><!-- /panel-redesign -->
+
+
+<!-- ── RETAINER ── -->
+<div class="panel" id="panel-retainer">
+  <p class="panel-intro">Use this when you're staffing or scoping work on an ongoing retainer engagement. These scenarios often show up after launch or during long-running partnerships.</p>
+
+  <div class="personas">
+
+    <!-- 1. The Direction Seeker -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">🧩</div>
+        <div class="card-title">
+          <h3>The Direction Seeker</h3>
+          <div class="situation">Budget exists but there's no clear focus. The backlog is full of tickets that aren't tied to any larger goals. The project feels like it's stalling.</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "We have X amount of budget. But what should we focus on?"
+        </div>
+        <div class="client-quote">
+          <div class="quote-label">Also sounds like</div>
+          "We need improvement ideas to execute to fill in our available unused budget."
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>Internal strategy session before any client-facing workshop is proposed</li>
+              <li>Use that session to diagnose what kind of workshop the client actually needs — so we're not running a prioritization session when they need a visioning session, or vice versa</li>
+              <li>Group backlog tickets into themes of impact and user goals</li>
+              <li>Roadmap planning and scope setting</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label content">✍️ Content Design</div>
+            <ul class="deliverables-list">
+              <li>Strategy setting support</li>
+              <li>IA audit to identify what's working and what isn't</li>
+              <li>Taxonomy workshops to establish shared priorities</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label research">🔬 Research</div>
+            <ul class="deliverables-list">
+              <li>Analytics review to identify high-impact areas</li>
+              <li>Lightweight user research to validate prioritization</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-dir')">Copy</button></h4>
+          <div class="brief-text" id="brief-dir">The client has budget and goodwill but no clear direction for where to invest it. The risk is either burning cycles on low-impact work or losing momentum entirely. Before we propose anything to the client, UX runs an internal strategy session — not to plan the client workshop, but to figure out what kind of workshop the client actually needs. A client who says "we need a prioritization session" may really need a visioning session first; one who says "let's do a roadmap" may need alignment on goals before any roadmap will stick. Getting this wrong means running the right process for the wrong problem. Research will pull analytics to inform that internal call. Once we know what we're solving, we design the right session and show up with a point of view — not a blank facilitation agenda.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. The Post-Launch Validator -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">🚀</div>
+        <div class="card-title">
+          <h3>The Post-Launch Validator</h3>
+          <div class="situation">The site just launched. Now the client wants to know: did it work? What do users think? What still needs to be fixed?</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "We launched the site with you — now what?"
+        </div>
+        <div class="client-quote">
+          <div class="quote-label">Also sounds like</div>
+          "We want to prove our redesign hypothesis and highlight areas that still need refinement. Was the project successful?"
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label research">🔬 Research</div>
+            <ul class="deliverables-list">
+              <li>NPS surveys and Voice of Customer programs</li>
+              <li>Usability testing against the launched experience</li>
+              <li>Analytics tracking and performance reporting</li>
+              <li>Benchmark comparison: before vs. after launch</li>
+              <li>Identify conversion, retention, or engagement gaps where Growth can drive impact</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label content">✍️ Content Design</div>
+            <ul class="deliverables-list">
+              <li>Content comprehension and IA testing</li>
+              <li>Set up and run content-specific tests</li>
+              <li>Lines of inquiry for ongoing measurement</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>Support analytics setup and tracking configuration</li>
+              <li>Synthesize findings into actionable improvement recommendations</li>
+              <li>Flag opportunities where Growth team involvement would accelerate results (e.g. A/B testing, funnel optimization, SEO)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-launch')">Copy</button></h4>
+          <div class="brief-text" id="brief-launch">The redesign is live, and now we need to shift from building to learning. The client wants validation — both to justify the investment and to understand what to tackle next. Research will lead this phase: NPS surveys, usability testing on the live site, analytics review, and a benchmark comparison against pre-launch baselines. Content Design will run targeted content and IA tests to evaluate specific decisions we made. Together, we'll give the client a clear picture of what's working, what's not, and a prioritized recommendation for next steps.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. The Feature Expander -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">➕</div>
+        <div class="card-title">
+          <h3>The Feature Expander</h3>
+          <div class="situation">A new product, offering, or feature needs to be integrated into an existing site — and it needs to feel like it belongs.</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "We want to add a new product offering, and it needs to feel prominent and special."
+        </div>
+        <div class="client-quote">
+          <div class="quote-label">Also sounds like</div>
+          "We have a new product that needs adding to a nav / site."
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label research">🔬 Research</div>
+            <ul class="deliverables-list">
+              <li>Discovery interviews and product-market fit research</li>
+              <li>Competitive analysis in the new feature space</li>
+              <li>User interviews to understand how the new offering fits into existing behavior</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label content">✍️ Content Design</div>
+            <ul class="deliverables-list">
+              <li>IA audit: where does this fit in the existing structure?</li>
+              <li>Taxonomy workshops to integrate new content</li>
+              <li>Messaging and positioning for the new offering</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>User flow design for the new feature path</li>
+              <li>Integration with existing navigation and journeys</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label product">🎨 Product Design</div>
+            <ul class="deliverables-list">
+              <li>Component and pattern design for the new feature</li>
+              <li>Visual integration with the existing design system</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-feat')">Copy</button></h4>
+          <div class="brief-text" id="brief-feat">The client has a new product or feature to add, and the temptation will be to treat it as a bolt-on. Our job is to make it feel intentional. Research will start by understanding whether the new offering actually matches what users need, how competitors are handling similar additions, and where this fits in the user's existing mental model of the site. Content Design will audit the current IA to find the right home for this new content and build the messaging framework. UX and Product Design will work together to design flows and components that make the feature feel native — not like it arrived late.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. The Strategy Steward -->
+    <div class="persona-card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="card-emoji">🗓️</div>
+        <div class="card-title">
+          <h3>The Strategy Steward</h3>
+          <div class="situation">Long-running relationship. The client wants to maintain momentum, revisit the roadmap, or align a new stakeholder on what's been decided.</div>
+        </div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="client-quote">
+          <div class="quote-label">Client is saying</div>
+          "We want to regroup on long-term strategy and keep momentum going."
+        </div>
+        <div class="client-quote">
+          <div class="quote-label">Also sounds like</div>
+          "The new marketing manager wants a new workstream on what they think is important." / "Things we couldn't get to in the initial redesign are piling up."
+        </div>
+
+        <div class="roles-section">
+          <h4>Who to bring in &amp; what they'll do</h4>
+
+          <div class="role-block">
+            <div class="role-label ux">🗺️ UX</div>
+            <ul class="deliverables-list">
+              <li>Lead an internal strategy session before the client roadmapping session</li>
+              <li>Backlog review and grooming with the team</li>
+              <li>Parking lot / prioritization framework to capture what got cut</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label content">✍️ Content Design</div>
+            <ul class="deliverables-list">
+              <li>Strategy setting support during client sessions</li>
+              <li>Content roadmap input: what's deferred, what's urgent</li>
+            </ul>
+          </div>
+
+          <div class="role-block">
+            <div class="role-label research">🔬 Research</div>
+            <ul class="deliverables-list">
+              <li>Lightweight check-in research to validate roadmap assumptions</li>
+              <li>Data synthesis to support priority conversations</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-strat')">Copy</button></h4>
+          <div class="brief-text" id="brief-strat">We're at an inflection point in the retainer — the initial phase is complete, the team may have shifted, and the client needs to reconnect with the longer-term plan. Before we sit down with them, we need to run our own internal alignment session: what did we do, what got deferred, what did the data tell us, and what do we think should come next. UX will lead that session and facilitate the client roadmapping conversation. Content Design will support with strategic input, and Research will provide any data needed to ground the discussion in user evidence rather than stakeholder preference.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /personas -->
+</div><!-- /panel-retainer -->
+
+
+<!-- ── ROLE GUIDE ── -->
+<div class="panel" id="panel-roles">
+  <p class="panel-intro">Not sure what a role actually does — or when to bring them in vs. someone else? Use this as a quick reference.</p>
+
+  <div class="role-cards">
+
+    <div class="role-card">
+      <div class="role-card-name">
+        <span class="role-label ux" style="margin:0">🗺️ UX</span>
+      </div>
+      <div class="role-card-desc">Shapes the overall experience: how it works, how users move through it, and how it holds together across flows. Bridges user needs, business goals, and technical constraints.</div>
+      <div class="role-card-when">Best entry point when: <span>you need to figure out what to build before you build it — research synthesis, flows, IA strategy, journey mapping, or when something feels broken but the cause is unclear.</span></div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-name">
+        <span class="role-label research" style="margin:0">🔬 Research</span>
+      </div>
+      <div class="role-card-desc">Grounds decisions in evidence. Runs interviews, usability tests, surveys, and analytics reviews to understand how real users think, behave, and struggle.</div>
+      <div class="role-card-when">Best entry point when: <span>the team is making assumptions about users, when something isn't working and nobody knows why, or when the client needs to be convinced to slow down before building.</span></div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-name">
+        <span class="role-label content" style="margin:0">✍️ Content Design</span>
+      </div>
+      <div class="role-card-desc">Shapes the content: its structure, language, taxonomy, and governance. Works across the front-end (what users read) and the back-end (how content is managed and scaled).</div>
+      <div class="role-card-when">Best entry point when: <span>users can't find things, the CMS is a mess, the messaging doesn't hold together, or there are IA problems that go deeper than navigation.</span></div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-name">
+        <span class="role-label product" style="margin:0">🎨 Product Design</span>
+      </div>
+      <div class="role-card-desc">Designs the visual and interactive layer: UI components, motion, design systems, and the craft that makes a product feel polished, accessible, and emotionally resonant.</div>
+      <div class="role-card-when">Best entry point when: <span>the experience is defined and needs to be made real — component-level design, visual systems, interaction design, or when a feature is ready to be built.</span></div>
+    </div>
+
+  </div>
+
+  <div style="margin-top: 32px; padding: 20px; background: #fef9ec; border-radius: var(--radius); border: 1px solid #f0e0b0;">
+    <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">⚠️ Common staffing mistakes</div>
+    <ul style="font-size: 13px; color: #4a4a44; line-height: 1.7; padding-left: 20px;">
+      <li>Asking a <strong>visual / product designer</strong> to solve an IA or navigation problem — that's a Content Design and UX problem first.</li>
+      <li>Skipping <strong>Research</strong> because there's "no time" — this creates risk downstream that costs more to fix.</li>
+      <li>Bringing in <strong>Content Design</strong> only for copywriting — they work on structure and systems, not just words.</li>
+      <li>Treating <strong>UX</strong> as wireframe producers — they define scope, strategy, and flows, not just lo-fi screens.</li>
+      <li>Staffing for the deliverable you think you need instead of the problem you're trying to solve.</li>
+    </ul>
+  </div>
+
+</div><!-- /panel-roles -->
+
+</main>
+
+<div class="toast" id="toast">Copied to clipboard</div>
+
+<script>
+  function switchTab(id) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      const ids = ['redesign', 'retainer', 'roles'];
+      t.classList.toggle('active', ids[i] === id);
+    });
+    document.querySelectorAll('.panel').forEach(p => {
+      p.classList.toggle('active', p.id === 'panel-' + id);
+    });
+  }
+
+  function toggleCard(card) {
+    card.classList.toggle('open');
+  }
+
+  function copyBrief(e, id) {
+    e.stopPropagation();
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
