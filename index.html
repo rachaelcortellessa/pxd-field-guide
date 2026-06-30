@@ -306,7 +306,37 @@
     font-size: 13px;
     line-height: 1.6;
     color: #3a3a38;
-    white-space: pre-line;
+  }
+
+  .phase-item { margin-bottom: 14px; }
+
+  .phase-header {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--accent);
+    margin-bottom: 3px;
+  }
+
+  .phase-body {
+    font-size: 13px;
+    color: #3a3a38;
+    line-height: 1.6;
+  }
+
+  .roadmap-feeds {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .roadmap-feeds strong {
+    color: var(--text);
+    font-weight: 600;
   }
 
   /* ── Role legend ── */
@@ -487,8 +517,22 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-overgrown')">Copy</button></h4>
-          <div class="brief-text" id="brief-overgrown">The client's site has grown without a clear IA strategy — content has been added layer by layer and the structure no longer reflects how users think or what they need. The client is aware it's a problem but has kept adding rather than stepping back to redesign the system. Content Design will lead this engagement: auditing what exists, mapping the ecosystem, and establishing a taxonomy and governance model that prevents the problem from recurring. UX will define the audience and set success metrics. Research will validate the new structure through testing before we build. The goal is not just a better nav — it's a system the client can actually maintain.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-overgrown')">Copy</button></h4>
+          <div class="brief-text" id="brief-overgrown">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Content audit — Content Design leads</div>
+              <div class="phase-body">Inventory everything against user needs and business goals. Separate what's working from what's creating noise. This produces the prioritized content inventory that everything else is built on.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: Ecosystem mapping + taxonomy — Content Design + UX</div>
+              <div class="phase-body">Build the content ecosystem map and new taxonomy system. UX defines the audience and sets success metrics in parallel so structure decisions are grounded in who we're actually designing for.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 3: Structural validation — Research</div>
+              <div class="phase-body">Tree testing and card sorting confirm the new navigation works before anything gets designed. Findings feed directly into the IA and sitemap.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> A validated IA framework, sitemap, and governance model that become the brief for wireframing and visual design. The client also leaves with a content ownership structure that prevents the same problem from recurring.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -544,8 +588,22 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-nomap')">Copy</button></h4>
-          <div class="brief-text" id="brief-nomap">The client doesn't have a working map of their own site — content ownership is unclear, institutional knowledge has walked out the door, and nobody can give us a confident picture of what's there. Before we can design anything, we need to establish that picture ourselves. UX will lead a site audit and stakeholder interview process to inventory what exists and who owns it. Research will layer in analytics to separate what's actually valuable from what's just old. Only once we have that foundation can Content Design build the ecosystem map and IA recommendations. Scoping this engagement without the discovery phase is not an option — we'll be designing in the dark.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-nomap')">Copy</button></h4>
+          <div class="brief-text" id="brief-nomap">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Site inventory + ownership mapping — UX leads</div>
+              <div class="phase-body">Audit what exists and run stakeholder interviews to establish who owns what. Nothing can be scoped until we know what we're working with and who has the authority to change it.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: Analytics review — Research</div>
+              <div class="phase-body">Overlay traffic data to separate what's actually valuable from what's just old. Provides the evidence base for what to keep, cut, or consolidate.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 3: Ecosystem map + IA — Content Design</div>
+              <div class="phase-body">With a complete picture established, Content Design maps the ecosystem and makes structural recommendations. This is the transition point from discovery to direction.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> A scoped, realistic project brief the team and client can align on — with a clear picture of what the redesign needs to solve, what's in and out of scope, and who owns what going forward.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -603,8 +661,22 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-conv')">Copy</button></h4>
-          <div class="brief-text" id="brief-conv">The client is seeing significant drop-off and wants to understand the "why" behind user behavior before making design decisions. This project starts with research — we need behavioral data, analytics review, and direct user input to identify where and why journeys are breaking down. From there, UX will map the corrected journey and Content Design will audit the language and touch points contributing to confusion or hesitation. We should not propose design solutions until we've validated the actual problem.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-conv')">Copy</button></h4>
+          <div class="brief-text" id="brief-conv">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Behavioral research — Research leads</div>
+              <div class="phase-body">Customer behavioral research, funnel analysis, and analytics review identify exactly where and why journeys break down. Output is a prioritized map of problem areas grounded in evidence — not assumptions.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: Journey mapping — UX</div>
+              <div class="phase-body">Using research findings, UX maps the corrected user journey and identifies where the experience — and the content within it — is creating friction or failure points.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 3: Content touch point audit — Content Design</div>
+              <div class="phase-body">Audit the language, CTAs, and content touch points along the journey for comprehension issues, inconsistencies, and missed opportunities.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> A prioritized intervention list ordered by impact — the direct input for the design and content sprint. Prevents the team from jumping to solutions before the actual problem is understood.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -655,8 +727,22 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-div')">Copy</button></h4>
-          <div class="brief-text" id="brief-div">The client has a fractured internal team with competing visions for what this project should accomplish. Before any design work begins, we need to create shared ground. Research will lead stakeholder workshops and 1:1 sessions to surface the real tension points. Content Design will run a messaging workshop to establish a core narrative everyone can work from. UX will conduct an objective audit of the current site to move the conversation from opinions to evidence. The goal of this phase is alignment — without it, anything we build will be challenged downstream.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-div')">Copy</button></h4>
+          <div class="brief-text" id="brief-div">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Stakeholder research — Research leads</div>
+              <div class="phase-body">1:1 interviews and workshops surface the real tension points — what each stakeholder actually wants, what they're afraid of, and where there's more alignment than the room suggests.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: Messaging alignment — Content Design</div>
+              <div class="phase-body">A messaging workshop uses research findings to build a core narrative that stakeholders can commit to. Without this, any design will be challenged downstream.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 3: Site audit — UX</div>
+              <div class="phase-body">An objective audit of the current site moves the conversation from opinions to evidence — giving everyone a shared baseline to make decisions from.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> A documented point of view on the site's purpose, audience, and messaging hierarchy that serves as the brief for IA and design. Stakeholder sign-off at this stage protects the rest of the project.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -705,8 +791,22 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-cms')">Copy</button></h4>
-          <div class="brief-text" id="brief-cms">The client's content is in a state of significant disorganization — the volume is overwhelming, governance has broken down, and the CMS is either locked down or feared. This is primarily a Content Design engagement at the start. We need to audit and map the existing content ecosystem before we can make any meaningful structural decisions. Content Design will lead the audit, establish a governance model, create templates and IA frameworks, and build a migration plan. UX will support by thinking through content curation strategies at the wireframing stage. The client should be told clearly: we can't redesign our way out of a content problem — we need to solve the content first.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-cms')">Copy</button></h4>
+          <div class="brief-text" id="brief-cms">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Content audit — Content Design leads</div>
+              <div class="phase-body">Audit all existing content against goals, user needs, and current performance. This is the hardest phase to sell but the most important — the client needs to understand we can't redesign our way out of a content problem.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: Ecosystem mapping + governance — Content Design + UX</div>
+              <div class="phase-body">Map the full content ecosystem and establish a governance model: who owns what, who can publish, and what the rules are. UX supports with CMS workflow and admin role recommendations.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 3: IA and templates — Content Design + UX</div>
+              <div class="phase-body">Build the IA framework and content templates that make the redesign executable — and keep the CMS manageable after launch.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> A content-ready brief for the build phase, including a migration plan and governance structure the client can actually use. This phase is what makes the redesign stick long-term.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -759,8 +859,22 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-multi')">Copy</button></h4>
-          <div class="brief-text" id="brief-multi">The client's site serves multiple distinct audiences whose needs are often in tension. The risk here is building something that tries to speak to everyone and resonates with no one. Research will start by defining what each audience actually comes to the site to do — not who the client thinks they are, but how they behave. Content Design will then build a messaging architecture and IA strategy that allows each audience to navigate confidently without the experience feeling fractured. UX will design page layouts and flows that make the right content visible to the right people at the right moment.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-multi')">Copy</button></h4>
+          <div class="brief-text" id="brief-multi">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Audience research — Research leads</div>
+              <div class="phase-body">Define what each distinct audience actually comes to the site to do — not who the client thinks they are, but how they behave. Output is an evidence-based picture of real goals and entry points per audience segment.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: Messaging architecture — Content Design</div>
+              <div class="phase-body">Build a messaging framework that allows each audience to navigate confidently without the experience feeling fragmented. Defines content hierarchy, IA, and tone by audience segment.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 3: Page layout strategy — UX</div>
+              <div class="phase-body">Design page layouts and flow patterns that surface the right content to the right people at the right moment — grounded in the messaging architecture.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> An audience-by-audience content and IA framework that directly informs wireframes. Prevents the build phase from reverting to "let's just put everything on the homepage."</div>
+          </div>
         </div>
       </div>
     </div>
@@ -808,8 +922,18 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-blind')">Copy</button></h4>
-          <div class="brief-text" id="brief-blind">The client wants to move forward but lacks the user data needed to make confident design decisions. Without it, we risk building something grounded in internal assumptions that won't reflect how real users think or behave. Before we scope design work, we need a research phase. Research will conduct user interviews to establish a baseline, layer in analytics to add quantitative context, and benchmark the current experience. UX will use those findings to define a clear scope and phase the work appropriately. This is not a delay — it's how we protect the client's investment.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-blind')">Copy</button></h4>
+          <div class="brief-text" id="brief-blind">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Foundational research — Research leads</div>
+              <div class="phase-body">User interviews, analytics review, and a UX benchmark establish a baseline: who users are, how they behave, and where the current experience fails them. This is the evidence the rest of the project builds on.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: Scope definition — UX</div>
+              <div class="phase-body">Using research findings, UX defines what we now know vs. what we still need to learn — and phases the work accordingly. Prevents over-scoping against assumptions that haven't been tested.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> A research-grounded project brief with a phased roadmap. The client leaves discovery with a defensible point of view on what to build — and the evidence to back it up internally.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -865,8 +989,22 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-rebrand')">Copy</button></h4>
-          <div class="brief-text" id="brief-rebrand">The client is navigating a significant identity change and the site needs to reflect a new reality — new name, new positioning, or new ownership. This isn't just a visual refresh; the site's structure, language, and content hierarchy all need to be reconsidered in light of what the brand now stands for. UX will lead a brand strategy sprint to establish alignment on the new positioning before any design begins. Content Design will audit all existing messaging and build an architecture that reflects the new brand. Research will help understand how current users perceive the brand and what the competition is doing in this space.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-rebrand')">Copy</button></h4>
+          <div class="brief-text" id="brief-rebrand">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Brand + competitive research — Research leads</div>
+              <div class="phase-body">User interviews establish current brand perception, and competitive analysis shows how the new positioning lands in the market. Surfaces gaps between how the client sees themselves and how users actually experience them.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: Brand strategy sprint — UX leads</div>
+              <div class="phase-body">Align the team and client on new brand values, positioning, and what that means for the site's purpose and structure. This must happen before any design begins — visual decisions without strategic grounding create a site that looks new but says nothing different.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 3: Messaging architecture — Content Design</div>
+              <div class="phase-body">Audit all existing content and build a messaging framework aligned to the new brand. Defines tone, content hierarchy, and IA implications of the repositioning across every site surface.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> A brand-aligned content and IA framework that becomes the brief for the redesign. Ensures visual and interaction design phases are building on a stable strategic foundation — not reacting to one.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -933,8 +1071,22 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-dir')">Copy</button></h4>
-          <div class="brief-text" id="brief-dir">The client has budget and goodwill but no clear direction for where to invest it. The risk is either burning cycles on low-impact work or losing momentum entirely. Before we propose anything to the client, UX runs an internal strategy session — not to plan the client workshop, but to figure out what kind of workshop the client actually needs. A client who says "we need a prioritization session" may really need a visioning session first; one who says "let's do a roadmap" may need alignment on goals before any roadmap will stick. Getting this wrong means running the right process for the wrong problem. Research will pull analytics to inform that internal call. Once we know what we're solving, we design the right session and show up with a point of view — not a blank facilitation agenda.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-dir')">Copy</button></h4>
+          <div class="brief-text" id="brief-dir">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Internal alignment session — UX leads</div>
+              <div class="phase-body">Before anything goes to the client, the team aligns on what the data says matters most — and diagnoses what kind of engagement the client actually needs. A client who asks for a "prioritization session" may really need a visioning session first. Getting this wrong means running the right process for the wrong problem.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: Data review — Research</div>
+              <div class="phase-body">Analytics review and lightweight user research provide the evidence base for the prioritization conversation. Separates high-impact opportunities from low-effort noise.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 3: Client prioritization session — UX + Content Design + Research</div>
+              <div class="phase-body">Facilitate a structured conversation that connects the backlog to user goals and business outcomes — not just technical tickets. The team arrives with a point of view, not a blank facilitation agenda.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> A prioritized roadmap with clear rationale the client can take to their leadership. Replaces a vague retainer with a focused workstream the team can execute against with confidence.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -993,8 +1145,22 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-launch')">Copy</button></h4>
-          <div class="brief-text" id="brief-launch">The redesign is live, and now we need to shift from building to learning. The client wants validation — both to justify the investment and to understand what to tackle next. Research will lead this phase: NPS surveys, usability testing on the live site, analytics review, and a benchmark comparison against pre-launch baselines. Content Design will run targeted content and IA tests to evaluate specific decisions we made. Together, we'll give the client a clear picture of what's working, what's not, and a prioritized recommendation for next steps.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-launch')">Copy</button></h4>
+          <div class="brief-text" id="brief-launch">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Baseline measurement — Research leads</div>
+              <div class="phase-body">NPS surveys, usability testing on the live site, and analytics review establish the post-launch baseline. Benchmark comparison against pre-launch data shows what improved, what didn't, and what created new problems.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: Content + IA testing — Content Design</div>
+              <div class="phase-body">Targeted tests evaluate specific content and structural decisions made during the build. Sets lines of inquiry for ongoing measurement beyond this phase.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 3: Growth opportunity assessment — UX + Research</div>
+              <div class="phase-body">Synthesize findings to identify where Growth team involvement — A/B testing, funnel optimization, SEO — would accelerate results the design work alone can't move.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> A clear post-launch report — what's working, what needs refinement, and a prioritized next-steps roadmap. Gives the client validation of the investment and a grounded plan for what the retainer should focus on next.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1058,8 +1224,22 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-feat')">Copy</button></h4>
-          <div class="brief-text" id="brief-feat">The client has a new product or feature to add, and the temptation will be to treat it as a bolt-on. Our job is to make it feel intentional. Research will start by understanding whether the new offering actually matches what users need, how competitors are handling similar additions, and where this fits in the user's existing mental model of the site. Content Design will audit the current IA to find the right home for this new content and build the messaging framework. UX and Product Design will work together to design flows and components that make the feature feel native — not like it arrived late.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-feat')">Copy</button></h4>
+          <div class="brief-text" id="brief-feat">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Discovery research — Research leads</div>
+              <div class="phase-body">Discovery interviews, product-market fit research, and competitive analysis answer the foundational question: does this new offering match what users actually need, and where does it fit in their existing mental model of the site?</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: IA audit + messaging — Content Design</div>
+              <div class="phase-body">Audit the current site structure to find the right home for the new content. Build the messaging framework and positioning for the new offering so it feels like it belongs — not like it arrived late.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 3: Flow + component design — UX + Product Design</div>
+              <div class="phase-body">Design the user flow and component patterns that integrate the new feature into existing journeys. The goal is native, not bolted on.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> A feature-ready design and content brief with validated positioning. Ensures the new offering strengthens the overall site rather than creating a seam the client will need to fix in the next retainer cycle.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1114,8 +1294,22 @@
         </div>
 
         <div class="brief-section">
-          <h4>Draft brief language <button class="copy-btn" onclick="copyBrief(event, 'brief-strat')">Copy</button></h4>
-          <div class="brief-text" id="brief-strat">We're at an inflection point in the retainer — the initial phase is complete, the team may have shifted, and the client needs to reconnect with the longer-term plan. Before we sit down with them, we need to run our own internal alignment session: what did we do, what got deferred, what did the data tell us, and what do we think should come next. UX will lead that session and facilitate the client roadmapping conversation. Content Design will support with strategic input, and Research will provide any data needed to ground the discussion in user evidence rather than stakeholder preference.</div>
+          <h4>Discovery Roadmap<button class="copy-btn" onclick="copyBrief(event, 'brief-strat')">Copy</button></h4>
+          <div class="brief-text" id="brief-strat">
+            <div class="phase-item">
+              <div class="phase-header">Phase 1: Internal team alignment — UX leads</div>
+              <div class="phase-body">Before meeting with the client, the team reviews what was built, what got deferred, and what the data is telling us. Produces a point of view on what the roadmap should prioritize — so we arrive at the client session with a perspective, not a blank agenda.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 2: Data synthesis — Research</div>
+              <div class="phase-body">Lightweight research or analytics review validates roadmap assumptions and surfaces any user signals that should shift priorities before the client conversation happens.</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-header">Phase 3: Client roadmapping session — UX + Content Design</div>
+              <div class="phase-body">Facilitate a structured session that reconnects the client to the longer-term strategy — or resets it if priorities have shifted. New stakeholders get aligned; deferred work gets triaged against current goals.</div>
+            </div>
+            <div class="roadmap-feeds"><strong>Where this leads:</strong> A refreshed, prioritized roadmap that the team and client both own. Transforms a drifting retainer into a focused engagement with clear next steps and renewed momentum.</div>
+          </div>
         </div>
       </div>
     </div>
